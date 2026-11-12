@@ -1,0 +1,25 @@
+// 正常完成 React Native 打包任务的依赖关系，但使用已导出的真实应用字节码。
+// 保留输出目录约定，使资源映射、资源合并和 APK 打包均可正常执行。
+tasks.configureEach { bundleTask ->
+    if (bundleTask.name == 'createBundleReleaseJsAndAssets') {
+        bundleTask.actions.clear()
+        bundleTask.outputs.upToDateWhen { false }
+        bundleTask.doLast {
+            def metadata = new groovy.json.JsonSlurper().parse(
+                rootProject.file('../dist/metadata.json')
+            )
+            def savedBundle = rootProject.file(
+                '../dist/' + metadata.fileMetadata.android.bundle
+            )
+            def outputDirectory = bundleTask.jsBundleDir.get().asFile
+            outputDirectory.mkdirs()
+            bundleTask.resourcesDir.get().asFile.mkdirs()
+            bundleTask.jsSourceMapsDir.get().asFile.mkdirs()
+            bundleTask.jsIntermediateSourceMapsDir.get().asFile.mkdirs()
+            new File(
+                outputDirectory,
+                bundleTask.bundleAssetName.get()
+            ).bytes = savedBundle.bytes
+        }
+    }
+}
