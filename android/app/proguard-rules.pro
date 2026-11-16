@@ -12,3 +12,10 @@
 -keep class com.facebook.react.turbomodule.** { *; }
 
 # Add any project specific keep options here:
+
+# 高德内部通过反射加载定位服务与实现类，release 混淆时必须保留。
+-keep class com.amap.api.location.** { *; }
+-keep class com.loc.** { *; }
+-keep class com.autonavi.aps.amapapi.** { *; }
+-keep class com.amap.api.services.** { *; }
+-keep class com.amap.api.col.s.** { *; }

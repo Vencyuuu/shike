@@ -90,10 +90,13 @@ android {
     namespace 'cn.shike.app'
     defaultConfig {
         applicationId 'cn.shike.app'
+        // Android Key 绑定包名与签名；环境变量用于 CI，默认值来自 gradle.properties。
+        manifestPlaceholders["AMAP_API_KEY"] = providers.environmentVariable("AMAP_API_KEY")
+            .orElse(providers.gradleProperty("AMAP_API_KEY")).get()
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.1.0"
+        versionCode 10
+        versionName "1.4.0"
 
         buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
     }
@@ -153,6 +156,10 @@ android {
 }
 
 dependencies {
+    // 固定版本，避免 latest.integration 让同一源码生成不同 SDK 行为。
+    implementation("com.amap.api:location:6.5.1")
+    // 9.7.1 与定位 6.5.1 重复内置核心类，使用接口完整且可共存的 9.7.0。
+    implementation("com.amap.api:search:9.7.0")
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
@@ -192,21 +199,3 @@ android {
     }
 }
 
-// SHIKE_PREBUILT_BUNDLE：正常完成打包任务的输出依赖，但使用已导出的真实业务字节码。
-// 不能用 -x 跳过任务，否则新版 Gradle 不允许资源映射任务读取其输出目录。
-tasks.configureEach { bundleTask ->
-    if (bundleTask.name == 'createBundleReleaseJsAndAssets') {
-        bundleTask.actions.clear()
-        bundleTask.outputs.upToDateWhen { false }
-        bundleTask.doLast {
-            def metadata = new groovy.json.JsonSlurper().parse(rootProject.file('../dist/metadata.json'))
-            def savedBundle = rootProject.file('../dist/' + metadata.fileMetadata.android.bundle)
-            def outputDirectory = bundleTask.jsBundleDir.get().asFile
-            outputDirectory.mkdirs()
-            bundleTask.resourcesDir.get().asFile.mkdirs()
-            bundleTask.jsSourceMapsDir.get().asFile.mkdirs()
-            bundleTask.jsIntermediateSourceMapsDir.get().asFile.mkdirs()
-            new File(outputDirectory, bundleTask.bundleAssetName.get()).bytes = savedBundle.bytes
-        }
-    }
-}

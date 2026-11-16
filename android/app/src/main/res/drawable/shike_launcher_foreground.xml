@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 适应圆形、圆角矩形等启动器遮罩，保护相框与餐具不被裁切。 -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+  android:inset="16.6667%">
+  <bitmap android:src="@drawable/shike_launcher_art" android:gravity="fill" />
+</inset>

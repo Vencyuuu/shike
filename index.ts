@@ -1,2 +1,5 @@
-// 此入口仅供生成原生宿主；APK 使用 dist 中已经成功导出的食刻 Hermes 字节码。
-throw new Error('请恢复完整业务源码后再运行 Metro 开发模式。');
+import { registerRootComponent } from "expo";
+import App from "./App";
+
+// 开发和原生打包均从实际业务源码启动，不再依赖遗留的不可编辑字节码。
+registerRootComponent(App);

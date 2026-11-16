@@ -21,8 +21,8 @@ class MainApplication : Application(), ReactApplication {
       context = applicationContext,
       packageList =
         PackageList(this).packages.apply {
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // add(MyReactNativePackage())
+          // 原生高德单次定位桥接，模块和 SDK 客户端均采用惰性创建。
+          add(AmapLocationPackage())
         }
     )
   }

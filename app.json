@@ -1,1 +1,59 @@
-{"expo":{"name":"食刻 Shikè","slug":"shike","version":"1.1.0","orientation":"portrait","userInterfaceStyle":"automatic","ios":{"bundleIdentifier":"cn.shike.app","supportsTablet":false},"android":{"package":"cn.shike.app","allowBackup":true,"blockedPermissions":["android.permission.RECORD_AUDIO"]},"plugins":["expo-sqlite",["expo-camera",{"cameraPermission":"允许食刻拍摄照片，把每一餐留在时间里。","recordAudioAndroid":false}],["expo-image-picker",{"photosPermission":"允许食刻访问你选择的饮食照片。","microphonePermission":false}],["expo-media-library",{"photosPermission":"仅在你选择删除源文件时，访问系统相册。","savePhotosPermission":"允许食刻管理你明确选择的照片。","granularPermissions":["photo"]}],"expo-sharing","@react-native-community/datetimepicker"]}}
+{
+  "expo": {
+    "name": "食刻 Shikè",
+    "slug": "shike",
+    "version": "1.4.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "cn.shike.app",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "cn.shike.app",
+      "allowBackup": true,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "versionCode": 10
+    },
+    "plugins": [
+      "expo-sqlite",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "允许食刻拍摄照片，把每一餐留在时间里。",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "允许食刻访问你选择的饮食照片。",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "仅在你选择删除源文件时，访问系统相册。",
+          "savePhotosPermission": "允许食刻管理你明确选择的照片。",
+          "granularPermissions": [
+            "photo"
+          ]
+        }
+      ],
+      "expo-sharing",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "仅在你选择附加位置时，获取当前餐次的地点。",
+          "isAndroidBackgroundLocationEnabled": false,
+          "isAndroidForegroundServiceEnabled": false
+        }
+      ]
+    ],
+    "icon": "./assets/branding/shike-icon-c4-upright.png"
+  }
+}
